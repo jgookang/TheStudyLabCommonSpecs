@@ -1,0 +1,94 @@
+﻿## Spec: POST /api/v1/auth/web/refresh
+
+**?좏삎**: `API Endpoint`  
+**?꾩튂**: `Common/api/auth-web-refresh-post.md`  
+**?묒꽦??*: 2026-03-28  
+**?곹깭**: `Ready`
+
+---
+
+### 紐⑹쟻
+
+> same-site refresh cookie 瑜?湲곕컲?쇰줈  
+> ???몄뀡??蹂듦뎄?섍굅??access token ???щ컻湲됲븳??
+
+---
+
+### ?붽뎄?ы빆
+
+- [x] request body ?놁씠 ?몄텧?????덈떎.
+- [x] ?깃났 ???ъ슜???뺣낫? ??access token ??諛섑솚?쒕떎.
+- [x] ?좏슚??refresh cookie 媛 ?녾굅??臾댄슚?섎㈃ ??긽 `401` ??諛섑솚?쒕떎.
+- [x] cookie 湲곕컲 ?몄쬆???꾪빐 `credentials: 'include'` 媛 ?꾩슂?섎떎.
+
+---
+
+### ?명꽣?섏씠???뺤쓽
+
+```typescript
+interface AuthUser {
+  id: string
+  name: string
+  grade?: string
+  subscription?: 'free' | 'premium' | 'family' | 'school'
+}
+
+interface AuthWebSessionResponse {
+  user: AuthUser
+  accessToken: string
+}
+
+interface ApiErrorResponse {
+  code: string
+  message: string
+  details?: unknown
+}
+```
+
+---
+
+### ?쒕쾭 寃利?洹쒖튃
+
+| ?꾨뱶 | 洹쒖튃 |
+|------|------|
+| Cookie | ?좏슚??refresh cookie 媛 ?덉뼱???쒕떎. |
+| Origin | ?덉슜??same-site origin ?댁뼱???쒕떎. |
+
+寃利??ㅽ뙣 ??沅뚯옣 ?먮윭:
+- refresh cookie ?놁쓬: `401 REFRESH_SESSION_NOT_FOUND`
+- refresh cookie 留뚮즺 ?먮뒗 臾댄슚: `401 REFRESH_SESSION_INVALID`
+
+---
+
+### ?숈옉 ?뺤쓽
+
+| 議곌굔 | ?숈옉 |
+|------|------|
+| ?좏슚??refresh cookie 議댁옱 | ???몄뀡 ?뺣낫瑜?諛섑솚?쒕떎. |
+| ?몄뀡 ?놁쓬 | ??긽 `401` ?몄쬆 ?먮윭瑜?諛섑솚?쒕떎. |
+| ??遺?몄뒪?몃옪 | ???꾨줎??`restoreSession()` ?먯꽌 ?ъ슜?쒕떎. |
+| ?섎룞 ?몄뀡 媛깆떊 | ???꾨줎??`refreshSession()` ?먯꽌 ?ъ궗?⑺븳?? |
+
+---
+
+### ?대씪?댁뼵??硫붾え
+
+- ???대씪?댁뼵?몃뒗 `401 REFRESH_SESSION_NOT_FOUND`, `401 REFRESH_SESSION_INVALID` 瑜?鍮꾨줈洹몄씤 ?곹깭濡??뺢퇋?뷀븷 ???덈떎.
+- ?쒕쾭 wire contract ????긽 `401` ?대떎.
+
+---
+
+### ?뚯뒪???쒕굹由ъ삤
+
+- [x] restoreSession ? refresh endpoint 瑜??몄텧?쒕떎.
+- [x] refreshSession ? ?몄뀡 議댁옱 ??refresh endpoint 瑜??몄텧?쒕떎.
+- [ ] refresh cookie 媛 ?놁쑝硫?`401 REFRESH_SESSION_NOT_FOUND` 瑜?諛섑솚?쒕떎.
+- [ ] refresh cookie 媛 臾댄슚?섎㈃ `401 REFRESH_SESSION_INVALID` 瑜?諛섑솚?쒕떎.
+
+---
+
+### 蹂寃??대젰
+
+| ?좎쭨 | 蹂寃??댁슜 | ?묒꽦??|
+|------|-----------|--------|
+| 2026-03-28 | web auth refresh endpoint spec 異붽? | Codex |
