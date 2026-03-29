@@ -96,6 +96,26 @@ npm.cmd run smoke:remote -- --base-url http://127.0.0.1:8080
 - operator auth guard + audit query validation paths
 - No contract break detected on existing smoke path.
 
+#### 2026-03-29 13:47 KST (Passed, Phase 3 Approval-Workflow Regression Check)
+
+- Command:
+
+```powershell
+node -e "<inline createApp + fetch smoke runner>"
+```
+
+- Result: passed.
+- Notes:
+- Sandbox process policy blocked background server orchestration (`npm run smoke:remote` path).
+- Executed equivalent inline smoke sequence in a single Node process:
+- `POST /api/v1/auth/web/login`
+- `POST /api/v1/auth/web/refresh`
+- `GET /api/v1/schedule/board?view=week`
+- `POST /api/v1/schedule`
+- `GET /api/v1/dashboard/metrics?period=weekly`
+- `POST /api/v1/auth/web/logout`
+- Verified no contract break after operator criteria approval-token gate changes.
+
 ---
 
 ### Fixture Capture Applied

@@ -49,6 +49,7 @@
 - Phase 3 kickoff verification passed:
 - `node --test` (`38/38`)
 - Added audit retention policy controls and criteria revoke approval-token workflow.
+- Inline remote smoke sequence passed (`2026-03-29 13:47 KST`) on `http://127.0.0.1:8080`.
 
 ---
 

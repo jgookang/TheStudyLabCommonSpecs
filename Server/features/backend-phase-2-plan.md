@@ -192,7 +192,8 @@
 
 4. Verification
 - Full server test suite passed (`node --test`, 38 tests).
-- Remote smoke still not re-runnable in this sandbox session due process spawn policy limits.
+- Inline remote smoke sequence passed (`2026-03-29 13:47 KST`) on `http://127.0.0.1:8080`.
+- Full `npm run smoke:remote` orchestration remained blocked in this sandbox session due process policy.
 
 #### Next Slice
 
