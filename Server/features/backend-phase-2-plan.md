@@ -165,6 +165,34 @@
 
 ---
 
+### Phase 3 Kickoff Progress (2026-03-29)
+
+#### Completed
+
+1. Audit retention policy controls
+- Added `AUTH_AUDIT_RETENTION_DAYS` configuration.
+- Added time-based audit event pruning in audit log domain.
+- Added retention coverage tests for enabled/disabled modes.
+
+2. Operator bulk-action hardening (dry-run baseline)
+- Added `dryRun` support for:
+- `POST /api/v1/auth/operator/sessions/revoke-all-by-criteria`
+- Added preview response fields for dry-run:
+- `candidateCount`, `previewSessionIds`, `reachedLimit`, `dryRun`
+- Added validation for dry-run payload typing.
+
+3. Verification
+- Full server test suite passed (`node --test`, 37 tests).
+- Remote smoke still not re-runnable in this sandbox session due process spawn policy limits.
+
+#### Next Slice
+
+1. Re-run remote smoke outside sandbox restrictions and record fresh timestamp.
+2. Add approval confirmation workflow for criteria revoke execution path.
+3. Publish environment-specific retention defaults and operator runbook.
+
+---
+
 ### Out of Scope for First Slice
 
 - Full analytics/event warehouse ingestion.
