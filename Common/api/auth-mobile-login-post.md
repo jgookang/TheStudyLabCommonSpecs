@@ -9,7 +9,7 @@
 
 ### Purpose
 
-> Mobile login endpoint for issuing access and refresh tokens.
+> Start a mobile session and return both access and refresh tokens in the response body.
 
 ---
 
@@ -22,38 +22,62 @@
 ### Auth
 
 - This endpoint is public.
-- Credential validation and abuse protection still apply.
+- Credential validation still applies.
+- Origin must be in the configured allowlist.
 
 ---
 
 ### Request
 
-- Use the route, query, and JSON body defined for $Endpoint.
-- Keep required identifiers, enums, and field names stable across client and server changes.
+- Headers:
+- `Content-Type: application/json`
+- JSON body:
+
+```json
+{
+  "email": "student@studypath.dev",
+  "password": "demo1234"
+}
+```
 
 ---
 
 ### Response
 
-- Return a stable DTO aligned with the client adapter for this screen or mutation.
-- Prefer cache-friendly responses so the client can update state without guessing.
+- `200 OK`
+- Body:
+
+```json
+{
+  "user": {
+    "id": "u1",
+    "name": "Smoke Student",
+    "grade": "high",
+    "subscription": "premium"
+  },
+  "accessToken": "access.u1.<token>",
+  "refreshToken": "<refresh-token>"
+}
+```
 
 ---
 
 ### Validation Rules
 
-- Validate required fields, route parameters, and supported enum values.
-- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+- `email` and `password` are required non-empty strings.
+- Invalid JSON body returns `400 INVALID_JSON_PAYLOAD`.
 
 ---
 
 ### Errors
 
-- Use explicit validation and credential errors for malformed or invalid sign-in attempts.
+- `400 INVALID_JSON_PAYLOAD`
+- `400 INVALID_CREDENTIALS_PAYLOAD`
+- `401 INVALID_CREDENTIALS`
+- `403 ORIGIN_NOT_ALLOWED`
 
 ---
 
 ### Client Notes
 
-- Keep this contract aligned with captured fixtures and adapter expectations.
-- Update this spec when the real backend payload changes, not just the application code.
+- Mobile clients must store `refreshToken` in secure storage.

@@ -1,6 +1,6 @@
 ## Spec: Session Handoff
 
-**Type**: `Handoff`  
+**Type**: `Feature`  
 **Location**: `Server/features/session-handoff.md`  
 **Updated**: 2026-03-29  
 **Status**: `Ready`
@@ -9,19 +9,45 @@
 
 ### Purpose
 
-> Server-side handoff summary for the next engineer.
+> Capture completed backend work and the exact start point for the next session.
 
 ---
 
-### Core Focus
+### Completed in This Phase
 
-- Keep backend work aligned with the shared contracts under `Common/api`.
-- Prefer a narrow, stable first slice over broad partial coverage.
-- Preserve enough context that another engineer can continue without rediscovery.
+- Implemented server runtime baseline, router, and error envelope.
+- Implemented shared auth core and token rotation.
+- Implemented web auth endpoints:
+- `POST /api/v1/auth/web/login`
+- `POST /api/v1/auth/web/refresh`
+- `POST /api/v1/auth/web/logout`
+- Implemented mobile auth endpoints:
+- `POST /api/v1/auth/mobile/login`
+- `POST /api/v1/auth/mobile/refresh`
+- `POST /api/v1/auth/mobile/logout`
+- Implemented dashboard, curriculum, schedule, habit, analytics, and community read endpoints.
+- Implemented dashboard/schedule/habit/community mutation endpoints.
 
 ---
 
-### Operational Notes
+### Verification Summary
 
-- Record auth, payload, and rollout decisions in the relevant shared or backend spec as soon as they become stable.
-- Use smoke-driven verification to confirm the first real backend path.
+- Server test suite (`node --test`) passes.
+- Remote smoke path passed after auth path migration to `/api/v1/auth/web/*`.
+- Fixture captures were updated on the frontend repo from real backend responses.
+
+---
+
+### Current Open Item
+
+- Step 9 finalization across repos:
+- Keep `CommonSpecs` smoke/runbook docs synced.
+- Finalize `TheStudyLab` commit for smoke script and fixture updates.
+
+---
+
+### First Tasks for Next Session
+
+1. Confirm clean git status in `TheStudyLabServer`, `CommonSpecs`, and `TheStudyLab`.
+2. Re-run smoke after client commit merge.
+3. Start Phase 2 design for persistent data/session storage and auth hardening.

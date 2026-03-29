@@ -3,25 +3,40 @@
 **Type**: `Feature`  
 **Location**: `Server/features/phase-1-next-steps.md`  
 **Updated**: 2026-03-29  
-**Status**: `Ready`
+**Status**: `In Progress`
 
 ---
 
 ### Purpose
 
-> Immediate backend actions needed to start implementation safely.
+> Track what is left after backend core implementation so cross-repo rollout can close cleanly.
 
 ---
 
-### Core Focus
+### Current State Summary
 
-- Keep backend work aligned with the shared contracts under `Common/api`.
-- Prefer a narrow, stable first slice over broad partial coverage.
-- Preserve enough context that another engineer can continue without rediscovery.
+- Backend implementation steps 1 through 8 are complete in `TheStudyLabServer`.
+- Web/mobile split auth endpoints are implemented and tested.
+- Dashboard/read and core mutation endpoints are implemented and tested.
+- Remote smoke path has passed with `/api/v1/auth/web/*` endpoints.
 
 ---
 
-### Operational Notes
+### Immediate Next Steps
 
-- Record auth, payload, and rollout decisions in the relevant shared or backend spec as soon as they become stable.
-- Use smoke-driven verification to confirm the first real backend path.
+1. Finalize Step 9 client repo commit:
+- `TheStudyLab/scripts/remoteSmokeTest.mjs`
+- refreshed fixture payload files captured from backend
+2. Keep `CommonSpecs` runbook and result docs up to date with latest smoke run.
+3. Re-run smoke after final client commit to confirm no regression.
+4. Move to Phase 2 planning:
+- durable storage for sessions/domain data
+- session expiry enforcement beyond in-memory runtime
+- auth hardening (rate limits, audit logs, revocation tooling)
+
+---
+
+### Parallel Work Items
+
+- Backend Phase 2 design can start in parallel with frontend fixture finalization.
+- Contract-test strengthening for shared DTO validation can run in parallel with persistence design.

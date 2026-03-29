@@ -6,8 +6,8 @@ This directory contains client-facing design notes for StudyPath, including prod
 - Zustand store responsibilities
 - Client adapter, rollout, and smoke-test guides
 ### Structure
-- pi/ contains integration and rollout docs for moving from mock data to the real backend.
-- eatures/ contains product-level feature specifications.
+- api/ contains integration and rollout docs for moving from mock data to the real backend.
+- features/ contains product-level feature specifications.
 - store/ contains local and global state contracts.
 - components/ contains reusable UI component specs.
 ### Working Rules

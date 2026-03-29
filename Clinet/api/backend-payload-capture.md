@@ -9,27 +9,52 @@
 
 ### Purpose
 
-> Process for capturing real backend payloads and feeding them back into fixtures and specs.
+> Define where real backend payloads are captured and how to sync them into fixtures, tests, and shared specs.
 
 ---
 
-### Core Responsibilities
+### Target Fixture Files
 
-- Keep the client rollout path clear and repeatable.
-- Align client behavior with the shared contracts under `Common/api`.
-- Document what needs to happen before, during, and after remote integration changes.
+#### Auth
+
+- `src/features/auth/api/fixtures/auth-session.json`
+- `src/features/auth/api/fixtures/auth-refresh-session.json`
+
+#### Dashboard
+
+- `src/features/dashboard/api/fixtures/metrics-get.response.json`
+- `src/features/dashboard/api/fixtures/notifications-get.response.json`
+- `src/features/dashboard/api/fixtures/plans-today-get.response.json`
+- `src/features/dashboard/api/fixtures/habits-get.response.json`
+
+#### Schedule
+
+- `src/features/schedule/api/fixtures/schedule-board-week.response.json`
+- `src/features/schedule/api/fixtures/schedule-create.response.json`
+- `src/features/schedule/api/fixtures/schedule-update.response.json`
+- `src/features/schedule/api/fixtures/schedule-delete.response.json`
+
+#### Habit
+
+- `src/features/habit/api/fixtures/habit-hub-get.response.json`
+- `src/features/habit/api/fixtures/habit-check.response.json`
 
 ---
 
-### Operating Rules
+### Capture Procedure
 
-- Prefer stable adapters between remote DTOs and UI-facing models.
-- Capture real payload differences in both fixtures and shared specs.
-- Record blockers instead of hiding them in ad hoc implementation notes.
+1. Run remote smoke against real backend with `--capture-fixtures`.
+2. Verify each overwritten fixture has valid JSON and expected shape.
+3. Update adapter/service tests for any real payload differences.
+4. Update matching `Common/api` specs in the same change.
+5. Re-run client tests and build checks.
 
 ---
 
-### Verification Notes
+### Checklist
 
-- Run smoke or targeted verification whenever a feature changes data source.
-- Keep examples and results documents current enough for the next engineer to continue.
+- Fixture payload matches real backend response.
+- Nullable/optional fields are documented in spec and adapter tests.
+- Auth and validation error payloads are covered in tests.
+- `npm.cmd test -- --run` passes.
+- `npm.cmd run build` passes.

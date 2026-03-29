@@ -9,7 +9,7 @@
 
 ### Purpose
 
-> Web logout endpoint for clearing the cookie-backed session.
+> Revoke the current web refresh session and clear auth cookies.
 
 ---
 
@@ -23,37 +23,47 @@
 
 - Use the web same-site refresh cookie as the transport.
 - Clients should send requests with `credentials: include`.
+- Origin must be in the configured allowlist.
 
 ---
 
 ### Request
 
-- Use the route, query, and JSON body defined for $Endpoint.
-- Keep required identifiers, enums, and field names stable across client and server changes.
+- Headers:
+- `Cookie: studypath_web_refresh_token=<refresh-token>` (optional for idempotency)
+- Body: none
 
 ---
 
 ### Response
 
-- Return a stable DTO aligned with the client adapter for this screen or mutation.
-- Prefer cache-friendly responses so the client can update state without guessing.
+- `200 OK`
+- Body:
+
+```json
+{
+  "ok": true
+}
+```
+- Always clears:
+- `studypath_web_refresh_token`
+- `studypath_session_id`
 
 ---
 
 ### Validation Rules
 
-- Validate required fields, route parameters, and supported enum values.
-- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+- Logout is idempotent.
+- If no refresh cookie is present, respond success and still clear cookies.
 
 ---
 
 ### Errors
 
-- Use explicit refresh-session errors when the cookie is missing, invalid, expired, or revoked.
+- `403 ORIGIN_NOT_ALLOWED`
 
 ---
 
 ### Client Notes
 
-- Keep this contract aligned with captured fixtures and adapter expectations.
-- Update this spec when the real backend payload changes, not just the application code.
+- After logout success, clear local access token state immediately.

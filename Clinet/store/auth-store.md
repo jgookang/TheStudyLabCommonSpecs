@@ -1,9 +1,9 @@
 ## Spec: authStore
 
-**Type**: $Type  
-**Location**: $Location  
+**Type**: `Client Store Contract`  
+**Location**: `Clinet/store/auth-store.md`  
 **Updated**: 2026-03-29  
-**Status**: $Status
+**Status**: `Ready`
 
 ---
 

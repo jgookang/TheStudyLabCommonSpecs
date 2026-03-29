@@ -1,4 +1,4 @@
-## Spec: POST /api/v1/community/posts/:postId/report
+﻿## Spec: POST /api/v1/community/posts/:postId/report
 
 **Type**: `API Endpoint`  
 **Location**: `Common/api/community-report-post.md`  
@@ -28,7 +28,7 @@
 
 ### Request
 
-- Use the route, query, and JSON body defined for $Endpoint.
+- Use this endpoint's documented path, query, and JSON body contract.
 - Keep required identifiers, enums, and field names stable across client and server changes.
 
 ---

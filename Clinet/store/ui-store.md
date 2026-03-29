@@ -1,9 +1,9 @@
 ## Spec: uiStore
 
-**Type**: $Type  
-**Location**: $Location  
+**Type**: `Client Store Contract`  
+**Location**: `Clinet/store/ui-store.md`  
 **Updated**: 2026-03-29  
-**Status**: $Status
+**Status**: `Ready`
 
 ---
 

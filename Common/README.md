@@ -6,7 +6,7 @@ This directory holds the shared contracts consumed by both the client and the ba
 - Auth rules and error envelopes
 - Validation, pagination, timezone, and transport rules
 ### Structure
-- pi/ stores endpoint-level specs that both the web and mobile clients can reference.
+- api/ stores endpoint-level specs that both the web and mobile clients can reference.
 ### Editing Rules
 - Update the shared contract first when a transport rule or payload field changes.
 - Document web and mobile auth separately whenever the transport differs.
