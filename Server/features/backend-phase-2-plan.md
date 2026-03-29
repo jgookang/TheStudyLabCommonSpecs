@@ -202,11 +202,15 @@
 - `TheStudyLabServer/.env.staging.example`
 - `TheStudyLabServer/.env.production.example`
 
+6. Operator evidence capture
+- Captured dry-run + execute sample and audit trail summary:
+- `Server/backend/operator-security-evidence.md`
+
 #### Next Slice
 
 1. Re-run remote smoke outside sandbox restrictions and record fresh timestamp.
 2. Apply template defaults to deployment environment variables and secret manager values.
-3. Capture one operator dry-run + execute evidence sample in ops notes.
+3. Validate retention and export behavior in staging/production after env rollout.
 
 ---
 

@@ -80,3 +80,5 @@ Policy notes:
 - Server repo templates:
 - `TheStudyLabServer/.env.staging.example`
 - `TheStudyLabServer/.env.production.example`
+- Server repo evidence:
+- `TheStudyLabServer/docs/operator-security-evidence.md`
