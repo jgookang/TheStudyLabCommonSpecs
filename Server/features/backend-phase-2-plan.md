@@ -212,14 +212,18 @@
 - Added configuration/env contract for PostgreSQL selection and table/schema overrides.
 - Added restart validation runner in implementation repo: `npm run smoke:postgres`.
 - `pg` install completed; current block is PostgreSQL credential auth failure (`28P01`) on local retry.
+- Added relational schema bootstrap runner (`npm run db:bootstrap:postgres`), currently blocked by same credential issue.
 - Captured blocked smoke attempt evidence:
 - `Server/backend/postgres-smoke-evidence.md`
+- Added relational schema bootstrap runner:
+- `npm run db:bootstrap:postgres`
 
 #### Next Slice
 
 1. Re-run remote smoke outside sandbox restrictions and record fresh timestamp.
 2. Apply template defaults to deployment environment variables and secret manager values.
 3. Run staging PostgreSQL connection + smoke verification with `PERSISTENCE_DRIVER=postgres` and `smoke:postgres`.
+4. Run relational schema bootstrap on staging PostgreSQL and capture output evidence.
 
 ---
 

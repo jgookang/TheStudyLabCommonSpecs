@@ -33,12 +33,24 @@
 - Blocking reason:
 - provided local credential is invalid for target PostgreSQL instance.
 
+### Attempt 3 (Relational Bootstrap Script Check)
+
+- Captured at (UTC): `2026-03-29T07:46:02Z`
+- Captured at (KST): `2026-03-29 16:46:02`
+- Command:
+- `npm.cmd run db:bootstrap:postgres -- --database-url "postgresql://postgres:postgres@localhost:5432/postgres"`
+- Result:
+- failed with PostgreSQL authentication error `28P01`.
+- Blocking reason:
+- same local credential mismatch against target PostgreSQL instance.
+
 ---
 
 ### Next Successful Run Criteria
 
 - `npm.cmd install` completed (done in current workspace).
 - `npm.cmd run smoke:postgres` returns JSON `"status": "passed"`.
+- `npm.cmd run db:bootstrap:postgres` succeeds with `ok: true`.
 - Restart validation confirms:
 - first boot login/mutation success
 - second boot refresh success

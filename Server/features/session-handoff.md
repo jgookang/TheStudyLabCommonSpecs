@@ -61,6 +61,8 @@
 - Added PostgreSQL restart verification script in server repo (`npm run smoke:postgres`).
 - Current PostgreSQL smoke run is blocked by credential auth error (`28P01`) on local retry.
 - PostgreSQL blocked-run evidence captured: `Server/backend/postgres-smoke-evidence.md`.
+- Added PostgreSQL relational schema bootstrap script (`npm run db:bootstrap:postgres`).
+- Current bootstrap run is also blocked by same PostgreSQL credential auth error (`28P01`).
 
 ---
 
@@ -69,6 +71,7 @@
 - Remote smoke re-run outside sandbox-restricted shell and result capture.
 - Apply staging/production template defaults to deployment env vars/secrets.
 - Run staging PostgreSQL connection + smoke verification with `PERSISTENCE_DRIVER=postgres` and `smoke:postgres`.
+- Run staging PostgreSQL relational schema bootstrap and capture output.
 
 ---
 
@@ -77,3 +80,4 @@
 1. Re-run remote smoke and sync latest timestamp in `Clinet/api/remote-smoke-test-results.md`.
 2. Apply staging/production env var defaults from `Server/backend/operator-security-runbook.md` and server templates.
 3. Run staging PostgreSQL connection + `smoke:postgres` verification and capture result.
+4. Run `db:bootstrap:postgres` on staging and attach output evidence.
