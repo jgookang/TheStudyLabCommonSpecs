@@ -58,6 +58,8 @@
 - Captured operator dry-run + execute evidence sample:
 - `Server/backend/operator-security-evidence.md` (`2026-03-29 14:36 KST`)
 - Started PostgreSQL persistence migration with driver mode split and env contracts.
+- Added PostgreSQL restart verification script in server repo (`npm run smoke:postgres`).
+- Current sandbox run is blocked at dependency install (`pg`) due network/permission policy.
 
 ---
 
@@ -65,7 +67,7 @@
 
 - Remote smoke re-run outside sandbox-restricted shell and result capture.
 - Apply staging/production template defaults to deployment env vars/secrets.
-- Run staging PostgreSQL connection + smoke verification with `PERSISTENCE_DRIVER=postgres`.
+- Run staging PostgreSQL connection + smoke verification with `PERSISTENCE_DRIVER=postgres` and `smoke:postgres`.
 
 ---
 
@@ -73,4 +75,4 @@
 
 1. Re-run remote smoke and sync latest timestamp in `Clinet/api/remote-smoke-test-results.md`.
 2. Apply staging/production env var defaults from `Server/backend/operator-security-runbook.md` and server templates.
-3. Run staging PostgreSQL connection + smoke verification and capture result.
+3. Run staging PostgreSQL connection + `smoke:postgres` verification and capture result.

@@ -210,12 +210,14 @@
 - Added persistence driver mode split: `memory | file | postgres`.
 - Added PostgreSQL bootstrap contract for JSONB snapshot table (`studylab_state_snapshots`).
 - Added configuration/env contract for PostgreSQL selection and table/schema overrides.
+- Added restart validation runner in implementation repo: `npm run smoke:postgres`.
+- Dependency install for `pg` remained blocked in this sandbox (npm registry access restriction).
 
 #### Next Slice
 
 1. Re-run remote smoke outside sandbox restrictions and record fresh timestamp.
 2. Apply template defaults to deployment environment variables and secret manager values.
-3. Run staging PostgreSQL connection + smoke verification with `PERSISTENCE_DRIVER=postgres`.
+3. Run staging PostgreSQL connection + smoke verification with `PERSISTENCE_DRIVER=postgres` and `smoke:postgres`.
 
 ---
 
