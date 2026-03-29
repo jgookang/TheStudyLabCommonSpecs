@@ -181,15 +181,24 @@
 - `candidateCount`, `previewSessionIds`, `reachedLimit`, `dryRun`
 - Added validation for dry-run payload typing.
 
-3. Verification
-- Full server test suite passed (`node --test`, 37 tests).
+3. Operator approval confirmation workflow
+- Added approval-token execution gate for criteria revoke:
+- first call: `dryRun=true` to receive `approvalId` and `approvalToken`
+- second call: execute with `approvalId` + `approvalToken`
+- Added replay/expiry validation contracts:
+- `OPERATOR_APPROVAL_INVALID_TOKEN`
+- `OPERATOR_APPROVAL_ALREADY_USED`
+- `OPERATOR_APPROVAL_EXPIRED`
+
+4. Verification
+- Full server test suite passed (`node --test`, 38 tests).
 - Remote smoke still not re-runnable in this sandbox session due process spawn policy limits.
 
 #### Next Slice
 
 1. Re-run remote smoke outside sandbox restrictions and record fresh timestamp.
-2. Add approval confirmation workflow for criteria revoke execution path.
-3. Publish environment-specific retention defaults and operator runbook.
+2. Publish environment-specific retention defaults and operator runbook.
+3. Add operator approval usage runbook (preview/execute/expired/reused token handling).
 
 ---
 

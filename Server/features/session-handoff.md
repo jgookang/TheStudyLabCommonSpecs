@@ -47,21 +47,21 @@
 - Remote smoke was not re-run in this sandbox session due process spawn policy restriction.
 - Last known smoke pass remains `2026-03-29 12:14 KST`.
 - Phase 3 kickoff verification passed:
-- `node --test` (`37/37`)
-- Added audit retention policy controls and criteria revoke dry-run support.
+- `node --test` (`38/38`)
+- Added audit retention policy controls and criteria revoke approval-token workflow.
 
 ---
 
 ### Current Open Item
 
 - Remote smoke re-run outside sandbox-restricted shell and result capture.
-- Criteria revoke approval workflow (confirm/nonce-based execution guard).
 - Environment-specific audit retention default and runbook sync.
+- Operator approval usage runbook (preview/execute/expired/reused token handling).
 
 ---
 
 ### First Tasks for Next Session
 
 1. Re-run remote smoke and sync latest timestamp in `Clinet/api/remote-smoke-test-results.md`.
-2. Add criteria revoke approval gate and contract tests.
-3. Publish audit retention 운영 기준 (local/staging/prod) in server runbook.
+2. Publish audit retention defaults (local/staging/prod) in server runbook.
+3. Add operator approval usage guidance with failure-code troubleshooting.
