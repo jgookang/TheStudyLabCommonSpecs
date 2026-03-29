@@ -13,24 +13,31 @@
 
 ---
 
-### Latest Attempt (Blocked)
+### Attempt 1 (Dependency Blocked)
 
 - Captured at (UTC): `2026-03-29T06:35:21.378Z`
 - Captured at (KST): `2026-03-29 15:35:21`
 - Command:
 - `npm.cmd run smoke:postgres`
-- Input mode:
-- `PERSISTENCE_DRIVER=postgres`
 - Result:
-- failed before runtime validation path due missing `pg` package in sandbox.
+- failed due missing `pg` dependency at that time.
+
+### Attempt 2 (Dependency Installed, Auth Blocked)
+
+- Captured at (UTC): `2026-03-29T07:27:42.940Z`
+- Captured at (KST): `2026-03-29 16:27:42`
+- Command:
+- `npm.cmd run smoke:postgres -- --database-url "postgresql://postgres:postgres@localhost:5432/postgres"`
+- Result:
+- failed with PostgreSQL authentication error `28P01`.
 - Blocking reason:
-- npm dependency install is blocked by sandbox network/permission policy.
+- provided local credential is invalid for target PostgreSQL instance.
 
 ---
 
 ### Next Successful Run Criteria
 
-- `npm.cmd install` completed in network-enabled environment.
+- `npm.cmd install` completed (done in current workspace).
 - `npm.cmd run smoke:postgres` returns JSON `"status": "passed"`.
 - Restart validation confirms:
 - first boot login/mutation success

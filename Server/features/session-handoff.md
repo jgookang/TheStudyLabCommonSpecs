@@ -59,7 +59,7 @@
 - `Server/backend/operator-security-evidence.md` (`2026-03-29 14:36 KST`)
 - Started PostgreSQL persistence migration with driver mode split and env contracts.
 - Added PostgreSQL restart verification script in server repo (`npm run smoke:postgres`).
-- Current sandbox run is blocked at dependency install (`pg`) due network/permission policy.
+- Current PostgreSQL smoke run is blocked by credential auth error (`28P01`) on local retry.
 - PostgreSQL blocked-run evidence captured: `Server/backend/postgres-smoke-evidence.md`.
 
 ---

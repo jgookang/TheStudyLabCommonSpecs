@@ -211,7 +211,7 @@
 - Added PostgreSQL bootstrap contract for JSONB snapshot table (`studylab_state_snapshots`).
 - Added configuration/env contract for PostgreSQL selection and table/schema overrides.
 - Added restart validation runner in implementation repo: `npm run smoke:postgres`.
-- Dependency install for `pg` remained blocked in this sandbox (npm registry access restriction).
+- `pg` install completed; current block is PostgreSQL credential auth failure (`28P01`) on local retry.
 - Captured blocked smoke attempt evidence:
 - `Server/backend/postgres-smoke-evidence.md`
 
