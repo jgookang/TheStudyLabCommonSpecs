@@ -1,16 +1,55 @@
-﻿## Spec: auth-refresh-post (Deprecated)
+## Spec: auth-refresh-post (Deprecated)
 
-**?좏삎**: `API Endpoint`  
-**?꾩튂**: `Common/api/auth-refresh-post.md`  
-**?묒꽦??*: 2026-03-28  
-**?곹깭**: `Deprecated`
+**Type**: `API Endpoint`  
+**Location**: `Common/api/auth-refresh-post.md`  
+**Updated**: 2026-03-29  
+**Status**: `Deprecated`
 
 ---
 
-### 硫붾え
+### Purpose
 
-> ?⑥씪 `/api/v1/auth/refresh` 怨꾩빟? ???댁긽 source of truth媛 ?꾨땲??
+> Historical generic auth refresh contract kept for reference only.
 
-- ???대씪?댁뼵?몃뒗 [auth-web-refresh-post.md](./auth-web-refresh-post.md) 瑜??ъ슜?쒕떎.
-- 紐⑤컮???대씪?댁뼵?몃뒗 [auth-mobile-refresh-post.md](./auth-mobile-refresh-post.md) 瑜??ъ슜?쒕떎.
-- ??refresh ?ㅽ뙣????긽 `401` 濡??묐떟?쒕떎.
+---
+
+### Endpoint
+
+- POST /api/v1/auth/refresh
+
+---
+
+### Auth
+
+- This file is kept only as a compatibility note.
+- Use the transport-specific source-of-truth docs instead.
+
+---
+
+### Request
+
+- Follow the corresponding active transport-specific document instead of this deprecated placeholder.
+
+---
+
+### Response
+
+- See the active transport-specific document for the canonical response contract.
+
+---
+
+### Validation Rules
+
+- Do not add new transport-specific behavior here.
+
+---
+
+### Errors
+
+- See the active source-of-truth transport document for canonical error codes.
+
+---
+
+### Client Notes
+
+- Keep this file only as a redirect for older references.

@@ -1,80 +1,59 @@
-﻿## Spec: GET /api/v1/analytics/overview
+## Spec: GET /api/v1/analytics/overview
 
-**유형**: `API`  
-**위치**: `Common/api/analytics-overview-get.md`  
-**작성일**: 2026-03-28  
-**상태**: `Ready`
-
----
-
-### 목적
-
-> 분석 화면에서 overview metric, 주간 추이, 과목별 집중도 데이터를 조회한다.
+**Type**: `API Endpoint`  
+**Location**: `Common/api/analytics-overview-get.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### 엔드포인트
+### Purpose
 
-- `GET /api/v1/analytics/overview`
-
----
-
-### 인증
-
-- 세션 기반 인증 필요
-- 인증 실패 시 `401 AUTH_REQUIRED`
+> Analytics overview payload for charts and summary cards.
 
 ---
 
-### 응답
+### Endpoint
 
-```json
-{
-  "data": {
-    "metrics": [
-      {
-        "id": "weekly-hours",
-        "label": "주간 학습 시간",
-        "value": 18.5,
-        "unit": "h",
-        "trendLabel": "지난주 대비 +2.5h"
-      }
-    ],
-    "trend": [
-      {
-        "id": "mon",
-        "label": "월",
-        "studyHours": 2.5,
-        "goalRate": 72
-      }
-    ],
-    "subjects": [
-      {
-        "id": "math",
-        "subject": "수학",
-        "studyHours": 7.2,
-        "progressRate": 82
-      }
-    ],
-    "insights": [
-      "수학 학습 시간이 가장 크게 늘었고, 목표 달성률도 함께 상승하고 있습니다."
-    ]
-  }
-}
-```
+- GET /api/v1/analytics/overview
 
 ---
 
-### 클라이언트 메모
+### Auth
 
-- query key: `['analytics', 'analytics-overview-get']`
-- remote service: `remoteAnalyticsService.getOverview()`
-- data source env: `VITE_ANALYTICS_DATA_SOURCE`
-- capture fixture: `src/features/analytics/api/fixtures/analytics-overview-get.response.json`
+- Require a valid authenticated user context.
+- Return `401 AUTH_REQUIRED` when the caller is not signed in.
 
 ---
 
-### 에러
+### Request
 
-- `401 AUTH_REQUIRED`
-- `500 INVALID_ANALYTICS_OVERVIEW_PAYLOAD`
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
+
+---
+
+### Response
+
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
+
+---
+
+### Validation Rules
+
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use endpoint-specific validation errors together with `401 AUTH_REQUIRED` when authentication is missing.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

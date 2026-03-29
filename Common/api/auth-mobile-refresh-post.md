@@ -1,90 +1,59 @@
-﻿## Spec: POST /api/v1/auth/mobile/refresh
+## Spec: POST /api/v1/auth/mobile/refresh
 
-**?좏삎**: `API Endpoint`  
-**?꾩튂**: `Common/api/auth-mobile-refresh-post.md`  
-**?묒꽦??*: 2026-03-28  
-**?곹깭**: `Ready`
-
----
-
-### 紐⑹쟻
-
-> ??secure storage ????λ맂 refresh token ?쇰줈  
-> 紐⑤컮???몄뀡??蹂듦뎄?섍굅??access token ???щ컻湲됲븳??
+**Type**: `API Endpoint`  
+**Location**: `Common/api/auth-mobile-refresh-post.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### ?붽뎄?ы빆
+### Purpose
 
-- [x] request body 濡?`refreshToken` ??諛쏅뒗??
-- [x] ?깃났 ???ъ슜???뺣낫? ??access/refresh token ?띿쓣 諛섑솚?쒕떎.
-- [x] refresh token ???녾굅??臾댄슚?섎㈃ `401` ??諛섑솚?쒕떎.
+> Mobile refresh endpoint for rotating the stored refresh token.
 
 ---
 
-### ?명꽣?섏씠???뺤쓽
+### Endpoint
 
-```typescript
-interface AuthMobileRefreshRequest {
-  refreshToken: string
-  deviceId?: string
-}
-
-interface AuthUser {
-  id: string
-  name: string
-  grade?: string
-  subscription?: 'free' | 'premium' | 'family' | 'school'
-}
-
-interface AuthMobileSessionResponse {
-  user: AuthUser
-  accessToken: string
-  refreshToken: string
-}
-
-interface ApiErrorResponse {
-  code: string
-  message: string
-  details?: unknown
-}
-```
+- POST /api/v1/auth/mobile/refresh
 
 ---
 
-### ?쒕쾭 寃利?洹쒖튃
+### Auth
 
-| ?꾨뱶 | 洹쒖튃 |
-|------|------|
-| `refreshToken` | ?꾩닔. ?좏슚??refresh token ?댁뼱???쒕떎. |
-
-寃利??ㅽ뙣 ??沅뚯옣 ?먮윭:
-- refresh token ?놁쓬: `401 REFRESH_SESSION_NOT_FOUND`
-- refresh token 留뚮즺 ?먮뒗 臾댄슚: `401 REFRESH_SESSION_INVALID`
+- Use the mobile refresh token transport.
+- Clients should rotate stored refresh tokens after successful refresh.
 
 ---
 
-### ?숈옉 ?뺤쓽
+### Request
 
-| 議곌굔 | ?숈옉 |
-|------|------|
-| ?좏슚??refresh token 議댁옱 | ???몄뀡 ?뺣낫瑜?諛섑솚?쒕떎. |
-| ?몄뀡 ?놁쓬 | ??긽 `401` ?몄쬆 ?먮윭瑜?諛섑솚?쒕떎. |
-| ??foreground 蹂듦? | 紐⑤컮??restore session ?먮쫫?먯꽌 ?ъ슜?쒕떎. |
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
 
 ---
 
-### ?뚯뒪???쒕굹由ъ삤
+### Response
 
-- [x] refresh endpoint 濡?refresh token ??POST ?쒕떎.
-- [x] ?깃났 ??access/refresh token ???뚯쟾?쒕떎.
-- [ ] refresh token ???놁쑝硫?`401 REFRESH_SESSION_NOT_FOUND` 瑜?諛섑솚?쒕떎.
-- [ ] refresh token ??臾댄슚?섎㈃ `401 REFRESH_SESSION_INVALID` 瑜?諛섑솚?쒕떎.
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
 
 ---
 
-### 蹂寃??대젰
+### Validation Rules
 
-| ?좎쭨 | 蹂寃??댁슜 | ?묒꽦??|
-|------|-----------|--------|
-| 2026-03-28 | mobile auth refresh endpoint spec 異붽? | Codex |
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use explicit refresh-session errors when the token is missing, invalid, expired, or revoked.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

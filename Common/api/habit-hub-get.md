@@ -1,81 +1,59 @@
-﻿## Spec: GET /api/v1/habits
+## Spec: GET /api/v1/dashboard/habits
 
-**유형**: `API`  
-**위치**: `Common/api/habit-hub-get.md`  
-**작성일**: 2026-03-28  
-**상태**: `Ready`
-
----
-
-### 목적
-
-> habit 화면에서 streak, XP, 배지 진행률, 루틴 체크리스트를 조회한다.
+**Type**: `API Endpoint`  
+**Location**: `Common/api/habit-hub-get.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### 엔드포인트
+### Purpose
 
-- `GET /api/v1/habits`
-
----
-
-### 인증
-
-- 세션 기반 인증 필요
-- 인증 실패 시 `401 AUTH_REQUIRED`
+> Dashboard habit preview payload.
 
 ---
 
-### 응답
+### Endpoint
 
-```json
-{
-  "data": {
-    "overview": {
-      "currentStreak": 14,
-      "bestStreak": 28,
-      "xp": 620,
-      "xpTarget": 1200,
-      "level": 5
-    },
-    "checklist": [
-      {
-        "id": "habit-reading",
-        "title": "아침 30분 영어 읽기",
-        "cadenceLabel": "매일",
-        "streakDays": 12,
-        "xpReward": 180,
-        "completedToday": true
-      }
-    ],
-    "badges": [
-      {
-        "id": "badge-focus",
-        "title": "집중 세션 마스터",
-        "targetLabel": "14일 연속",
-        "progressRate": 100,
-        "unlocked": true
-      }
-    ],
-    "insights": [
-      "현재 가장 긴 루틴은 14일 연속입니다."
-    ]
-  }
-}
-```
+- GET /api/v1/dashboard/habits
 
 ---
 
-### 클라이언트 메모
+### Auth
 
-- query key: `['habit', 'habit-hub-get']`
-- remote service: `remoteHabitService.getHub()`
-- data source env: `VITE_HABIT_DATA_SOURCE`
-- capture fixture: `src/features/habit/api/fixtures/habit-hub-get.response.json`
+- Require a valid authenticated user context.
+- Return `401 AUTH_REQUIRED` when the caller is not signed in.
 
 ---
 
-### 에러
+### Request
 
-- `401 AUTH_REQUIRED`
-- `500 INVALID_HABIT_HUB_PAYLOAD`
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
+
+---
+
+### Response
+
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
+
+---
+
+### Validation Rules
+
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use endpoint-specific validation errors together with `401 AUTH_REQUIRED` when authentication is missing.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

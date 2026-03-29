@@ -1,43 +1,59 @@
-﻿## Spec: GET /api/v1/curriculum/roadmaps
+## Spec: GET /api/v1/curriculum/roadmaps
 
-**유형**: `API Endpoint`  
-**위치**: `Common/api/curriculum-roadmap-get.md`  
-**작성일**: 2026-03-28  
-**상태**: `Ready`
-
----
-
-### 목적
-
-> 커리큘럼 목록 화면에서 사용자에게 노출할 로드맵 요약 목록을 조회한다.
+**Type**: `API Endpoint`  
+**Location**: `Common/api/curriculum-roadmap-get.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### 요구사항
+### Purpose
 
-- 로드맵 목록을 배열로 반환한다.
-- 각 항목은 `id`, `title`, `targetExam`, `gradeLabel`, `subjectCount`, `estimatedWeeks`, `completionRate`, `tagline`을 포함한다.
-- 인증이 필요하다.
+> Roadmap summary list for the curriculum overview.
 
 ---
 
-### Query Key / Service
+### Endpoint
 
-- React Query key: `['curriculum', 'curriculum-roadmap-get']`
-- remote service: `remoteCurriculumService.getRoadmaps()`
-- capture fixture: `src/features/curriculum/api/fixtures/curriculum-roadmap-get.response.json`
+- GET /api/v1/curriculum/roadmaps
 
 ---
 
-### 서버 검증 규칙
+### Auth
 
-- 인증 없음: `401 AUTH_REQUIRED`
-- 필수 필드 누락: `500 INVALID_CURRICULUM_ROADMAP_PAYLOAD`
+- Require a valid authenticated user context.
+- Return `401 AUTH_REQUIRED` when the caller is not signed in.
 
 ---
 
-### 테스트 시나리오
+### Request
 
-- [x] roadmap 목록 endpoint를 호출한다.
-- [x] remote service가 response wrapper를 언랩한다.
-- [x] curriculum page가 query 결과를 카드로 렌더링한다.
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
+
+---
+
+### Response
+
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
+
+---
+
+### Validation Rules
+
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use endpoint-specific validation errors together with `401 AUTH_REQUIRED` when authentication is missing.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

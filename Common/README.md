@@ -1,19 +1,13 @@
-﻿# Common Specs
-
-怨듯넻 怨꾩빟 臾몄꽌瑜?蹂닿??⑸땲??
-
-## 踰붿쐞
-
-- API endpoint contract
-- request / response schema
-- auth / error payload rule
-- validation / pagination / timezone rule
-
-## 援ъ“
-
-- `api/`: ?? 紐⑤컮?? ?쒕쾭媛 怨듭쑀?섎뒗 endpoint spec
-
-## ?댁쁺 ?먯튃
-
-- 怨듯넻 怨꾩빟???섏젙???뚮뒗 ?대씪?댁뼵?몄? ?쒕쾭 ?곹뼢 踰붿쐞瑜??④퍡 湲곕줉?⑸땲??
-- ?밴낵 紐⑤컮??transport 媛 ?ㅻⅤ?붾씪???꾨찓??payload ???ш린??癒쇱? ?뺣━?⑸땲??
+# Common Specs
+This directory holds the shared contracts consumed by both the client and the backend.
+### Scope
+- API endpoint contracts
+- Request and response payload shape
+- Auth rules and error envelopes
+- Validation, pagination, timezone, and transport rules
+### Structure
+- pi/ stores endpoint-level specs that both the web and mobile clients can reference.
+### Editing Rules
+- Update the shared contract first when a transport rule or payload field changes.
+- Document web and mobile auth separately whenever the transport differs.
+- Prefer stable, implementation-ready wording so adapters and smoke tests can use the same source.

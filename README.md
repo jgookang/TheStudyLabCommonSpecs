@@ -1,21 +1,19 @@
-﻿# CommonSpecs
-
-StudyPath ?ㅽ럺 臾몄꽌???⑥씪 ??μ냼?낅땲??
-
-## 援ъ“
-
-- `Common/`: ?? 紐⑤컮?? ?쒕쾭媛 ?④퍡 蹂대뒗 怨듯넻 怨꾩빟
-- `Server/`: ?쒕쾭 ?대? ?ㅺ퀎, 援ы쁽 怨꾪쉷, handoff
-- `Clinet/`: ???대씪?댁뼵???꾩슜 ?ㅺ퀎, store, component, rollout 臾몄꽌
-
-## source of truth
-
-- 怨듯넻 API 怨꾩빟, auth 洹쒖튃, ?묐떟 ?뺤떇, ?먮윭 肄붾뱶, ?꾨찓??洹쒖튃? `Common/`??source of truth ?낅땲??
-- ?쒕쾭 援ы쁽 ?곸꽭??`Server/`?먯꽌 愿由ы빀?덈떎.
-- ???대씪?댁뼵??援ы쁽 ?곸꽭??`Clinet/`?먯꽌 愿由ы빀?덈떎.
-- `TheStudyLabServer` ? `TheStudyLab` ??μ냼??`docs/specs` ???덈궡???ъ씤?곕쭔 ?좎??⑸땲??
-
-## auth policy
-
-- ??auth ??same-site 諛고룷 + HttpOnly refresh cookie + refresh failure always `401` 湲곗??쇰줈 怨좎젙?⑸땲??
-- 紐⑤컮??auth ??secure storage refresh token rotation 湲곗??쇰줈 怨좎젙?⑸땲??
+# CommonSpecs
+CommonSpecs is the shared specification workspace for StudyPath. It collects cross-team contracts, client plans, and server implementation notes in one place.
+### Workspace Layout
+- Common/ contains shared API contracts and payload rules.
+- Server/ contains backend design notes, implementation plans, and handoff material.
+- Clinet/ contains client feature specs, store contracts, component specs, and rollout guides.
+### Source of Truth Rules
+- Shared API contracts, auth policy, pagination rules, and error envelopes live under Common/.
+- Server-only implementation decisions live under Server/.
+- Client-only UI, state, adapter, and rollout decisions live under Clinet/.
+- Application repositories should link back to these specs instead of copying them by hand.
+### Auth Policy
+- Web auth uses a same-site deployment model with an HttpOnly refresh cookie.
+- Web refresh failures return explicit 401 responses so the client can move to a signed-out state.
+- Mobile auth uses the same backend auth core, but the refresh token is transported through secure storage.
+### Working Agreement
+- Update shared contracts before changing transport-specific implementations.
+- When real backend payloads differ from the spec, fix the spec and the client adapters in the same pass.
+- Keep Markdown docs in English so cross-team review stays easy.

@@ -1,73 +1,59 @@
-﻿## Spec: POST /api/v1/auth/mobile/logout
+## Spec: POST /api/v1/auth/mobile/logout
 
-**?좏삎**: `API Endpoint`  
-**?꾩튂**: `Common/api/auth-mobile-logout-post.md`  
-**?묒꽦??*: 2026-03-28  
-**?곹깭**: `Ready`
-
----
-
-### 紐⑹쟻
-
-> 紐⑤컮???ъ슜???몄뀡??醫낅즺?섍퀬 refresh session ???먭린?쒕떎.
+**Type**: `API Endpoint`  
+**Location**: `Common/api/auth-mobile-logout-post.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### ?붽뎄?ы빆
+### Purpose
 
-- [x] request body 濡?`refreshToken` ??諛쏅뒗??
-- [x] ?깃났 ??`204 No Content` 瑜?諛섑솚?쒕떎.
-- [x] ?몄뀡???놁뼱??硫깅벑 ?깃났 泥섎━?????덈떎.
+> Mobile logout endpoint for revoking a token-backed session.
 
 ---
 
-### ?명꽣?섏씠???뺤쓽
+### Endpoint
 
-```typescript
-interface AuthMobileLogoutRequest {
-  refreshToken: string
-}
-
-type AuthMobileLogoutResponse = void
-
-interface ApiErrorResponse {
-  code: string
-  message: string
-  details?: unknown
-}
-```
+- POST /api/v1/auth/mobile/logout
 
 ---
 
-### ?쒕쾭 寃利?洹쒖튃
+### Auth
 
-| ?꾨뱶 | 洹쒖튃 |
-|------|------|
-| `refreshToken` | ?몄뀡???덉쑝硫??먭린?쒕떎. ?놁뼱??硫깅벑 ?깃났 泥섎━?????덈떎. |
-
-沅뚯옣 寃곌낵:
-- ?뺤긽 濡쒓렇?꾩썐: `204 No Content`
-- ?몄뀡 ?놁쓬: ?숈씪?섍쾶 ?깃났 泥섎━ 媛??
----
-
-### ?숈옉 ?뺤쓽
-
-| 議곌굔 | ?숈옉 |
-|------|------|
-| ?뺤긽 濡쒓렇?꾩썐 | refresh session ???먭린?섍퀬 ?깃났 ?묐떟??諛섑솚?쒕떎. |
-| ?대? ?몄뀡 ?놁쓬 | 硫깅벑?곸쑝濡??깃났 泥섎━?쒕떎. |
+- Use the mobile refresh token transport.
+- Clients should rotate stored refresh tokens after successful refresh.
 
 ---
 
-### ?뚯뒪???쒕굹由ъ삤
+### Request
 
-- [x] logout endpoint 濡?refresh token ??POST ?쒕떎.
-- [ ] ?몄뀡???녿뒗 ?곹깭?먯꽌??硫깅벑 ?깃났 ?щ?瑜??뺤씤?쒕떎.
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
 
 ---
 
-### 蹂寃??대젰
+### Response
 
-| ?좎쭨 | 蹂寃??댁슜 | ?묒꽦??|
-|------|-----------|--------|
-| 2026-03-28 | mobile auth logout endpoint spec 異붽? | Codex |
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
+
+---
+
+### Validation Rules
+
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use explicit refresh-session errors when the token is missing, invalid, expired, or revoked.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

@@ -1,55 +1,59 @@
-﻿## Spec: POST /api/v1/habits/check
+## Spec: POST /api/v1/habits/check
 
-**유형**: `API`  
-**위치**: `Common/api/habit-check-post.md`  
-**작성일**: 2026-03-28  
-**상태**: `Ready`
-
----
-
-### 목적
-
-> 오늘의 habit 완료 여부를 토글한다.
+**Type**: `API Endpoint`  
+**Location**: `Common/api/habit-check-post.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### 엔드포인트
+### Purpose
 
-- `POST /api/v1/habits/check`
-
----
-
-### 요청 본문
-
-```json
-{
-  "habitId": "habit-review"
-}
-```
+> Habit completion mutation for the active user.
 
 ---
 
-### 응답
+### Endpoint
 
-- 성공 시 최신 habit hub 전체 데이터를 `data`로 반환한다.
-- 클라이언트는 반환된 hub 데이터를 그대로 query cache에 반영한다.
-
----
-
-### 검증 규칙
-
-- `habitId`는 현재 사용자에게 속한 체크리스트 항목이어야 한다.
-- 토글 결과에 따라 XP, streak, badge 진행률이 함께 갱신되어야 한다.
+- POST /api/v1/habits/check
 
 ---
 
-### 캡처 Fixture
+### Auth
 
-- `src/features/habit/api/fixtures/habit-check.response.json`
+- Require a valid authenticated user context.
+- Return `401 AUTH_REQUIRED` when the caller is not signed in.
 
 ---
 
-### 에러
+### Request
 
-- `401 AUTH_REQUIRED`
-- `404 HABIT_NOT_FOUND`
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
+
+---
+
+### Response
+
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
+
+---
+
+### Validation Rules
+
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use endpoint-specific validation errors together with `401 AUTH_REQUIRED` when authentication is missing.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

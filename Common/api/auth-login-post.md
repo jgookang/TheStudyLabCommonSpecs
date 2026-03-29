@@ -1,16 +1,55 @@
-﻿## Spec: auth-login-post (Deprecated)
+## Spec: auth-login-post (Deprecated)
 
-**?좏삎**: `API Endpoint`  
-**?꾩튂**: `Common/api/auth-login-post.md`  
-**?묒꽦??*: 2026-03-28  
-**?곹깭**: `Deprecated`
+**Type**: `API Endpoint`  
+**Location**: `Common/api/auth-login-post.md`  
+**Updated**: 2026-03-29  
+**Status**: `Deprecated`
 
 ---
 
-### 硫붾え
+### Purpose
 
-> ?⑥씪 `/api/v1/auth/login` 怨꾩빟? ???댁긽 source of truth媛 ?꾨땲??
+> Historical generic auth login contract kept for reference only.
 
-- ???대씪?댁뼵?몃뒗 [auth-web-login-post.md](./auth-web-login-post.md) 瑜??ъ슜?쒕떎.
-- 紐⑤컮???대씪?댁뼵?몃뒗 [auth-mobile-login-post.md](./auth-mobile-login-post.md) 瑜??ъ슜?쒕떎.
-- ?섎굹??諛깆뿏?쒓? ?밴낵 紐⑤컮?쇱쓣 紐⑤몢 吏?먰븯吏留? auth transport ??遺꾨━?쒕떎.
+---
+
+### Endpoint
+
+- POST /api/v1/auth/login
+
+---
+
+### Auth
+
+- This file is kept only as a compatibility note.
+- Use the transport-specific source-of-truth docs instead.
+
+---
+
+### Request
+
+- Follow the corresponding active transport-specific document instead of this deprecated placeholder.
+
+---
+
+### Response
+
+- See the active transport-specific document for the canonical response contract.
+
+---
+
+### Validation Rules
+
+- Do not add new transport-specific behavior here.
+
+---
+
+### Errors
+
+- See the active source-of-truth transport document for canonical error codes.
+
+---
+
+### Client Notes
+
+- Keep this file only as a redirect for older references.

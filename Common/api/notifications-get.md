@@ -1,96 +1,59 @@
-﻿## Spec: GET /api/v1/dashboard/notifications
+## Spec: GET /api/v1/dashboard/notifications
 
-**?좏삎**: `API Endpoint`  
-**?꾩튂**: `Common/api/notifications-get.md`  
-**?묒꽦??*: 2026-03-28  
-**?곹깭**: `Ready`
-
----
-
-### 紐⑹쟻
-
-> ??쒕낫???뚮┝ ?뱀뀡怨??곷떒 ?뚮┝ 踰꾪듉???꾩슂??理쒖떊 ?뚮┝ 紐⑸줉??議고쉶?쒕떎.  
-> ?쒗뿕 ?쇱젙, 紐⑺몴 ?ъ꽦, 異붿쿇 ?낅뜲?댄듃 媛숈? ?붿빟 ?뚮┝??理쒖떊?쒖쑝濡??쒓났?쒕떎.
+**Type**: `API Endpoint`  
+**Location**: `Common/api/notifications-get.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### ?붽뎄?ы빆
+### Purpose
 
-- [x] 理쒖떊 ?뚮┝ 紐⑸줉??諛섑솚?쒕떎.
-- [x] 媛??뚮┝? ?쒕ぉ, ?ㅻ챸, ?앹꽦 ?쒓컖, tone ?뺣낫瑜?媛吏꾨떎.
-- [x] ??쒕낫?쒖뿉?쒕뒗 理쒓렐 3媛?湲곗??쇰줈 ?곗꽑 ?ъ슜?쒕떎.
-- [x] ?몄쬆???꾩슂?섎떎.
+> Dashboard notification summary payload.
 
 ---
 
-### ?명꽣?섏씠???뺤쓽
+### Endpoint
 
-```typescript
-type NotificationTone = 'default' | 'success' | 'info' | 'warning'
-
-interface NotificationItem {
-  id: string
-  title: string
-  description: string
-  createdAt: string
-  timeLabel?: string
-  tone: NotificationTone
-}
-
-interface NotificationsGetResponse {
-  data: NotificationItem[]
-}
-
-interface ApiErrorResponse {
-  code: string
-  message: string
-  details?: unknown
-}
-```
+- GET /api/v1/dashboard/notifications
 
 ---
 
-### ?쒕쾭 寃利?洹쒖튃
+### Auth
 
-| ?꾨뱶 | 洹쒖튃 |
-|------|------|
-| Authorization | ?꾩닔. ?좏슚??access token ?먮뒗 ?쒕쾭 ?몄쬆 而⑦뀓?ㅽ듃媛 ?덉뼱???쒕떎. |
-| `createdAt` | ISO 8601 timestamp ?댁뼱???쒕떎. |
-
-寃利??ㅽ뙣 ??沅뚯옣 ?먮윭:
-- ?몄쬆 ?놁쓬: `401 AUTH_REQUIRED`
+- Require a valid authenticated user context.
+- Return `401 AUTH_REQUIRED` when the caller is not signed in.
 
 ---
 
-### ?숈옉 ?뺤쓽
+### Request
 
-| 議곌굔 | ?숈옉 |
-|------|------|
-| 湲곕낯 議고쉶 | 理쒖떊??諛곗뿴??諛섑솚?쒕떎. |
-| ?뚮┝ ?놁쓬 | 鍮?諛곗뿴??諛섑솚?쒕떎. |
-| ?쒖떆???쒓컙 臾몄옄??| ?쒕쾭??`createdAt` ????긽 ?대젮二쇨퀬 `timeLabel` ? ?좏깮?곸쑝濡쒕쭔 ?대젮以?? |
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
 
 ---
 
-### Query Key / Adapter
+### Response
 
-- React Query key: `['dashboard', 'notifications-get', mode]`
-- remote DTO ??`data: NotificationItem[]` 援ъ“瑜??ъ슜?쒕떎.
-- ?대씪?댁뼵?몃뒗 `timeLabel` ???놁쑝硫?`createdAt` 湲곗??쇰줈 ?곷? ?쒓컙???뚮뜑留곹븷 ???덈떎.
-
----
-
-### ?뚯뒪???쒕굹由ъ삤
-
-- [x] 理쒖떊 ?뚮┝ 紐⑸줉??諛섑솚?쒕떎.
-- [x] ?뚮┝???놁쑝硫?鍮?諛곗뿴??諛섑솚?쒕떎.
-- [ ] ?몄쬆 ?녿뒗 ?붿껌? `401 AUTH_REQUIRED` 瑜?諛섑솚?쒕떎.
-- [ ] `createdAt` ??湲곗??쇰줈 理쒖떊???뺣젹???좎??쒕떎.
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
 
 ---
 
-### 蹂寃??대젰
+### Validation Rules
 
-| ?좎쭨 | 蹂寃??댁슜 | ?묒꽦??|
-|------|-----------|--------|
-| 2026-03-28 | ?뚮┝ 議고쉶 API spec Ready 濡??뺤젙 | Codex |
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use endpoint-specific validation errors together with `401 AUTH_REQUIRED` when authentication is missing.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

@@ -1,52 +1,59 @@
-﻿## Spec: DELETE /api/v1/schedule/:scheduleId
+## Spec: DELETE /api/v1/schedule/:scheduleId
 
-**유형**: `API`  
-**위치**: `Common/api/schedule-delete-delete.md`  
-**작성일**: 2026-03-28  
-**상태**: `Ready`
-
----
-
-### 목적
-
-> 주간 일정 보드에서 특정 학습 세션을 삭제한다.
+**Type**: `API Endpoint`  
+**Location**: `Common/api/schedule-delete-delete.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### 엔드포인트
+### Purpose
 
-- `DELETE /api/v1/schedule/:scheduleId?view=week`
-
----
-
-### Query
-
-| key | type | required | note |
-| --- | --- | --- | --- |
-| `view` | `'week'` | yes | 현재는 주간 CRUD만 지원 |
+> Schedule delete mutation for existing study sessions.
 
 ---
 
-### 응답
+### Endpoint
 
-- 성공 시 최신 schedule board를 `data`로 반환한다.
-
----
-
-### 검증 규칙
-
-- `scheduleId`는 현재 사용자의 보드에 존재해야 한다.
-- 월간 summary 세션은 직접 삭제 대상이 아니다.
+- DELETE /api/v1/schedule/:scheduleId
 
 ---
 
-### 캡처 Fixture
+### Auth
 
-- `src/features/schedule/api/fixtures/schedule-delete.response.json`
+- Require a valid authenticated user context.
+- Return `401 AUTH_REQUIRED` when the caller is not signed in.
 
 ---
 
-### 에러
+### Request
 
-- `401 AUTH_REQUIRED`
-- `404 SCHEDULE_SESSION_NOT_FOUND`
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
+
+---
+
+### Response
+
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
+
+---
+
+### Validation Rules
+
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use endpoint-specific validation errors together with `401 AUTH_REQUIRED` when authentication is missing.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

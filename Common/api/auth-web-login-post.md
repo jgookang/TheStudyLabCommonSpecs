@@ -1,99 +1,59 @@
-﻿## Spec: POST /api/v1/auth/web/login
+## Spec: POST /api/v1/auth/web/login
 
-**?좏삎**: `API Endpoint`  
-**?꾩튂**: `Common/api/auth-web-login-post.md`  
-**?묒꽦??*: 2026-03-28  
-**?곹깭**: `Ready`
-
----
-
-### 紐⑹쟻
-
-> ???꾨줎?몄뿉???대찓?쇨낵 鍮꾨?踰덊샇濡?濡쒓렇?명븯怨? 
-> same-site refresh cookie 湲곕컲 ?몄뀡???쒖옉?쒕떎.
+**Type**: `API Endpoint`  
+**Location**: `Common/api/auth-web-login-post.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### ?붽뎄?ы빆
+### Purpose
 
-- [x] `email`, `password` payload瑜?諛쏅뒗??
-- [x] ?깃났 ???ъ슜???뺣낫? access token ??諛섑솚?쒕떎.
-- [x] ?깃났 ??HttpOnly refresh cookie 瑜??ㅼ젙?쒕떎.
-- [x] ?ㅽ뙣 ???몄쬆 ?먮윭瑜?諛섑솚?쒕떎.
+> Web login endpoint for starting a same-site authenticated session.
 
 ---
 
-### ?명꽣?섏씠???뺤쓽
+### Endpoint
 
-```typescript
-interface AuthWebLoginRequest {
-  email: string
-  password: string
-}
-
-interface AuthUser {
-  id: string
-  name: string
-  grade?: string
-  subscription?: 'free' | 'premium' | 'family' | 'school'
-}
-
-interface AuthWebSessionResponse {
-  user: AuthUser
-  accessToken: string
-}
-
-interface ApiErrorResponse {
-  code: string
-  message: string
-  details?: unknown
-}
-```
+- POST /api/v1/auth/web/login
 
 ---
 
-### ?쒕쾭 寃利?洹쒖튃
+### Auth
 
-| ?꾨뱶 | 洹쒖튃 |
-|------|------|
-| `email` | ?꾩닔. 鍮꾩뼱 ?덉? ?딆븘???섍퀬 ?대찓???뺤떇?댁뼱???쒕떎. |
-| `password` | ?꾩닔. 鍮꾩뼱 ?덉? ?딆븘???쒕떎. |
-
-寃利??ㅽ뙣 ??沅뚯옣 ?먮윭:
-- ?섎せ??payload: `400 INVALID_CREDENTIALS_PAYLOAD`
-- ?섎せ???먭꺽 利앸챸: `401 INVALID_CREDENTIALS`
+- This endpoint is public.
+- Credential validation and abuse protection still apply.
 
 ---
 
-### ?숈옉 ?뺤쓽
+### Request
 
-| 議곌굔 | ?숈옉 |
-|------|------|
-| ?뺤긽 濡쒓렇??| ?ъ슜???뺣낫? access token ??諛섑솚?섍퀬 refresh cookie 瑜??ㅼ젙?쒕떎. |
-| ?섎せ???먭꺽 利앸챸 | 401 怨꾩뿴 ?몄쬆 ?먮윭瑜?諛섑솚?쒕떎. |
-| ?쒕쾭 ?ㅻ쪟 | 怨듯넻 `ApiClientError` 濡?蹂?섎맂?? |
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
 
 ---
 
-### 蹂댁븞 硫붾え
+### Response
 
-- ??auth ??same-site 諛고룷瑜?湲곕낯?쇰줈 ?쒕떎.
-- refresh cookie ??HttpOnly, Secure, SameSite=Lax 瑜?湲곕낯媛믪쑝濡??쒕떎.
-- ??endpoint ??`Origin` allowlist ?뺤콉 ?꾨옒?먯꽌 ?댁쁺?쒕떎.
-
----
-
-### ?뚯뒪???쒕굹由ъ삤
-
-- [x] login endpoint 濡?credentials 瑜?POST ?쒕떎.
-- [x] ?깃났 ??refresh cookie 媛 ?ㅼ젙?쒕떎.
-- [ ] ?섎せ???먭꺽 利앸챸? `401 INVALID_CREDENTIALS` 瑜?諛섑솚?쒕떎.
-- [ ] 鍮??대찓???먮뒗 鍮꾨?踰덊샇 payload ??`400 INVALID_CREDENTIALS_PAYLOAD` 瑜?諛섑솚?쒕떎.
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
 
 ---
 
-### 蹂寃??대젰
+### Validation Rules
 
-| ?좎쭨 | 蹂寃??댁슜 | ?묒꽦??|
-|------|-----------|--------|
-| 2026-03-28 | web auth login endpoint spec 異붽? | Codex |
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use explicit validation and credential errors for malformed or invalid sign-in attempts.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

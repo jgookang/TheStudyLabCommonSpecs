@@ -1,109 +1,48 @@
-﻿## Spec: timerStore
+## Spec: timerStore
 
-**타입**: `Store Slice`
-**위치**: `Clinet/store/timer-store.md`
-**작성일**: 2026-03-28
-**상태**: `Draft`
-
----
-
-### 목적 (Purpose)
-
-> `timerStore`는 Pomodoro 기반 학습 타이머의 상태 전이를 관리한다.
-> 남은 시간, 총 시간, 세션 카운트, 실행 상태를 한 곳에서 다루고 완료 시 세션 저장 흐름과 연결한다.
+**Type**: $Type  
+**Location**: $Location  
+**Updated**: 2026-03-29  
+**Status**: $Status
 
 ---
 
-### 요구사항 (Requirements)
+### Purpose
 
-- [ ] `idle`, `running`, `paused`, `completed` 상태를 지원한다.
-- [ ] 기본 집중 모드 `25분`을 지원한다.
-- [ ] `focus`, `short`, `long` 모드를 지원할 수 있어야 한다.
-- [ ] 시작, 일시정지, 리셋, 틱, 완료 액션을 제공한다.
-- [ ] 세션 완료 횟수를 기록한다.
+> Model the Pomodoro-style study timer, including status changes, elapsed progress, and completed sessions.
 
 ---
 
-### 인터페이스 정의 (Interface)
+### State Model
 
-```typescript
-type TimerStatus = 'idle' | 'running' | 'paused' | 'completed'
-type TimerMode = 'focus' | 'short' | 'long'
-
-interface TimerStoreState {
-  status: TimerStatus
-  mode: TimerMode
-  remaining: number
-  totalSeconds: number
-  sessionCount: number
-  currentSubject?: string
-}
-
-interface TimerStoreActions {
-  start: () => void
-  pause: () => void
-  reset: (mode?: TimerMode) => void
-  tick: () => void
-  complete: () => void
-  setMode: (mode: TimerMode) => void
-  setSubject: (subject?: string) => void
-}
-
-type TimerStore = TimerStoreState & TimerStoreActions
-```
+- Track `status`, `mode`, `remaining`, `totalSeconds`, `sessionCount`, and the current subject.
+- Support `focus`, `short`, and `long` timer modes.
+- Support `idle`, `running`, `paused`, and `completed` status values.
 
 ---
 
-### 상태 전이
+### Actions
 
-| 현재 상태 | 액션 | 다음 상태 |
-|----------|------|----------|
-| `idle` | `start()` | `running` |
-| `running` | `pause()` | `paused` |
-| `paused` | `start()` | `running` |
-| `running` | `complete()` | `completed` |
-| `any` | `reset()` | `idle` |
-
----
-
-### 동작 정의 (Behavior)
-
-| 조건 | 동작 |
-|------|------|
-| `tick()` 호출 | `running` 상태에서만 `remaining`을 감소시킨다 |
-| `remaining === 0` | `complete()`를 호출한다 |
-| `complete()` | 상태를 완료로 바꾸고 세션 수를 증가시킨다 |
-| `reset(mode)` | 해당 모드의 기본 시간으로 초기화한다 |
+- `start()` moves idle or paused timers into a running state.
+- `pause()` freezes the timer without resetting remaining time.
+- `reset(mode?)` restores the default duration for the chosen mode.
+- `tick()` decrements remaining time while the timer is running.
+- `complete()` marks the timer as done and increments the completed session count.
+- `setMode(mode)` and `setSubject(subject)` update the timer context.
 
 ---
 
-### 엣지 케이스 & 제약 (Edge Cases)
+### Operational Rules
 
-- [ ] `tick()`이 중복 실행되어 시간이 두 번씩 줄지 않도록 해야 한다.
-- [ ] 음수 시간으로 내려가지 않도록 clamp가 필요하다.
-- [ ] 탭 비활성화나 백그라운드 전환 시 시간 오차 보정 전략이 필요하다.
-
----
-
-### 테스트 시나리오 (Test Scenarios)
-
-- [ ] `start()` 후 상태가 `running`이 된다.
-- [ ] `pause()` 후 시간이 유지된다.
-- [ ] `tick()`이 남은 시간을 1초 줄인다.
-- [ ] 시간이 0이 되면 `completed`가 된다.
-- [ ] `reset()`이 기본 시간으로 복귀시킨다.
+- Prevent duplicate ticking so time does not drop twice per second.
+- Clamp remaining time at zero and complete automatically when it runs out.
+- Background or tab-suspension drift should be corrected by a higher-level effect or service.
 
 ---
 
-### 변경 이력 (Changelog)
+### Test Notes
 
-| 날짜 | 변경 내용 | 작성자 |
-|------|-----------|--------|
-| 2026-03-28 | timerStore Spec 초안 작성 | Codex |
-
----
-
-### 확인 (Approval)
-
-- [ ] 상태 전이 확인
-- [ ] 모드 범위 확인
+- Starting changes the status to `running`.
+- Pausing preserves the remaining time.
+- Ticking decrements time only while running.
+- Reset restores the expected default duration for the active mode.

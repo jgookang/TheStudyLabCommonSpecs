@@ -1,22 +1,16 @@
-﻿# Clinet Specs
-
-???대씪?댁뼵???꾩슜 ?ㅺ퀎 臾몄꽌瑜?蹂닿??⑸땲??
-
-## 踰붿쐞
-
-- feature flow
-- component spec
-- store spec
-- client adapter / rollout / smoke 臾몄꽌
-
-## 援ъ“
-
-- `api/`: ?대씪?댁뼵??integration / rollout 臾몄꽌
-- `features/`: 湲곕뒫 ?ㅺ퀎
-- `store/`: ?곹깭 ?ㅺ퀎
-- `components/`: UI component spec
-
-## 李몄“ ?먯튃
-
-- 怨듯넻 endpoint contract ??`../Common/api` 瑜?癒쇱? ?뺤씤?⑸땲??
-- ?대씪?댁뼵??臾몄꽌??怨듯넻 怨꾩빟???뚮퉬?섎뒗 諛⑹떇怨?UI / state / adapter 硫붾え瑜?湲곕줉?⑸땲??
+# Clinet Specs
+This directory contains client-facing design notes for StudyPath, including product features, UI components, state slices, and remote rollout material.
+### Scope
+- Feature flow and screen responsibilities
+- Shared component contracts
+- Zustand store responsibilities
+- Client adapter, rollout, and smoke-test guides
+### Structure
+- pi/ contains integration and rollout docs for moving from mock data to the real backend.
+- eatures/ contains product-level feature specifications.
+- store/ contains local and global state contracts.
+- components/ contains reusable UI component specs.
+### Working Rules
+- Check ../Common/api before changing client payload handling.
+- Keep UI models separate from raw DTOs when the payload shape is not ideal for rendering.
+- Use remote smoke tests and captured fixtures to verify rollout changes.

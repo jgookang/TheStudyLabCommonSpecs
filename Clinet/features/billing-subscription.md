@@ -1,35 +1,43 @@
-﻿## Spec: Billing And Subscription
+## Spec: Billing And Subscription
 
-**유형**: `Feature`  
-**위치**: `Clinet/features/billing-subscription.md`  
-**작성일**: 2026-03-28  
-**상태**: `Implemented`
-
----
-
-### 목적
-
-> 커뮤니티 premium CTA와 설정 화면이 같은 구독 관리 페이지로 연결되도록 하여
-> 실제 결제 API 전 단계에서도 일관된 billing 진입 흐름을 제공한다.
+**Type**: `Feature`  
+**Location**: `Clinet/features/billing-subscription.md`  
+**Updated**: 2026-03-29  
+**Status**: `Draft`
 
 ---
 
-### 범위
+### Purpose
 
-- [x] `/settings/billing`
-- [x] 현재 플랜 표시
-- [x] 플랜 카드 비교
-- [x] 커뮤니티 CTA 연결
-- [x] 설정 화면 연결
-- [x] premium gate overlay CTA 연결
-- [ ] 실제 결제 / 플랜 변경 API
+> Plan discovery, entitlement sync, and subscription-aware product states.
 
 ---
 
-### 구현 기준
+### Scope
 
-- `BillingPage`는 현재 세션의 `subscription` 값을 읽어 현재 플랜을 표시한다.
-- `CommunityPage`와 `CommunityPostDetailPage`의 premium CTA는 `/settings/billing`으로 이동한다.
-- `CommunityPage`와 `CommunityPostDetailPage`의 free 세션 premium gate CTA도 같은 billing 화면으로 이동한다.
-- `SettingsPage`에서도 같은 billing 화면에 진입할 수 있다.
-- 실제 결제 API가 아직 없으므로 플랜 변경 버튼은 안내용 toast로 동작한다.
+- Define the user-facing responsibilities of this feature.
+- Keep the initial delivery small enough to ship and validate quickly.
+- Leave room for later expansion without breaking the first contract.
+
+---
+
+### Dependencies
+
+- Shared contracts under `Common/api` when this feature reads or writes remote data.
+- Shared client components, stores, and adapter layers.
+- Responsive and accessibility requirements used across the app.
+
+---
+
+### Acceptance Criteria
+
+- The feature can render meaningful loading, error, and empty states.
+- The first implementation path is clear enough for an engineer to pick up without re-planning.
+- Feature behavior stays aligned with the shared contracts and rollout order.
+
+---
+
+### Implementation Notes
+
+- Treat this doc as a product-facing implementation guide, not a raw UI mock transcription.
+- Push transport and payload details into shared API specs when they affect multiple teams.

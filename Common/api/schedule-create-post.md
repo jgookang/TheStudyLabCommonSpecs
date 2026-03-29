@@ -1,65 +1,59 @@
-﻿## Spec: POST /api/v1/schedule
+## Spec: POST /api/v1/schedule
 
-**유형**: `API`  
-**위치**: `Common/api/schedule-create-post.md`  
-**작성일**: 2026-03-28  
-**상태**: `Ready`
-
----
-
-### 목적
-
-> 주간 일정 보드에 새 학습 세션을 추가한다.
+**Type**: `API Endpoint`  
+**Location**: `Common/api/schedule-create-post.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### 엔드포인트
+### Purpose
 
-- `POST /api/v1/schedule`
-
----
-
-### 요청 본문
-
-```json
-{
-  "view": "week",
-  "columnId": "thu",
-  "title": "과학 개념 정리",
-  "subject": "탐구",
-  "startTime": "21:00",
-  "endTime": "22:00",
-  "status": "planned",
-  "originLabel": "수동 추가"
-}
-```
+> Schedule creation mutation for new study sessions.
 
 ---
 
-### 응답
+### Endpoint
 
-- 성공 시 최신 schedule board를 `data`로 반환한다.
-- 클라이언트는 반환된 board로 query cache를 갱신한다.
-
----
-
-### 검증 규칙
-
-- `view`는 현재 `week`만 허용한다.
-- `columnId`는 유효한 주간 컬럼이어야 한다.
-- `title`, `subject`는 비어 있을 수 없다.
-- `endTime`은 `startTime`보다 뒤여야 한다.
+- POST /api/v1/schedule
 
 ---
 
-### 캡처 Fixture
+### Auth
 
-- `src/features/schedule/api/fixtures/schedule-create.response.json`
+- Require a valid authenticated user context.
+- Return `401 AUTH_REQUIRED` when the caller is not signed in.
 
 ---
 
-### 에러
+### Request
 
-- `400 INVALID_SCHEDULE_INPUT`
-- `401 AUTH_REQUIRED`
-- `404 SCHEDULE_COLUMN_NOT_FOUND`
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
+
+---
+
+### Response
+
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
+
+---
+
+### Validation Rules
+
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use endpoint-specific validation errors together with `401 AUTH_REQUIRED` when authentication is missing.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

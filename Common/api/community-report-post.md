@@ -1,61 +1,59 @@
-﻿## Spec: Community Report Post
+## Spec: POST /api/v1/community/posts/:postId/report
 
-**유형**: `API`  
-**위치**: `Common/api/community-report-post.md`  
-**작성일**: 2026-03-28  
-**상태**: `Ready`
-
----
-
-### 목적
-
-> 커뮤니티 게시글 신고를 moderation 큐에 등록하고, 접수 결과를 클라이언트에 반환한다.
+**Type**: `API Endpoint`  
+**Location**: `Common/api/community-report-post.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### 엔드포인트
+### Purpose
 
-- `POST /api/v1/community/posts/:postId/report`
-
----
-
-### 요청
-
-```json
-{
-  "reason": "misinfo",
-  "details": "과목명과 학습 범위 설명이 실제 커리큘럼 기준과 다르게 보입니다."
-}
-```
+> Community moderation report submission mutation.
 
 ---
 
-### 응답
+### Endpoint
 
-```json
-{
-  "data": {
-    "reportId": "report-123",
-    "postId": "post-featured-1",
-    "reason": "misinfo",
-    "details": "과목명과 학습 범위 설명이 실제 커리큘럼 기준과 다르게 보입니다.",
-    "reportedAt": "2026-03-28T09:00:00.000Z"
-  }
-}
-```
+- POST /api/v1/community/posts/:postId/report
 
 ---
 
-### 클라이언트 메모
+### Auth
 
-- mutation hook: `useReportCommunityPost(postId)`
-- remote service: `remoteCommunityService.reportPost(postId, payload)`
-- 성공 시 상세 페이지는 신고 모달을 닫고 접수 toast를 표시한다.
+- Require a valid authenticated user context.
+- Return `401 AUTH_REQUIRED` when the caller is not signed in.
 
 ---
 
-### 에러
+### Request
 
-- `400 INVALID_COMMUNITY_REPORT`
-- `401 AUTH_REQUIRED`
-- `404 COMMUNITY_POST_NOT_FOUND`
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
+
+---
+
+### Response
+
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
+
+---
+
+### Validation Rules
+
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use endpoint-specific validation errors together with `401 AUTH_REQUIRED` when authentication is missing.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

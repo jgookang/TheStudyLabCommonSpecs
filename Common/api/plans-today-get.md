@@ -1,105 +1,59 @@
-﻿## Spec: GET /api/v1/dashboard/plans/today
+## Spec: GET /api/v1/dashboard/plans/today
 
-**?좏삎**: `API Endpoint`  
-**?꾩튂**: `Common/api/plans-today-get.md`  
-**?묒꽦??*: 2026-03-28  
-**?곹깭**: `Ready`
-
----
-
-### 紐⑹쟻
-
-> ?ㅻ뒛???숈뒿 怨꾪쉷 紐⑸줉??議고쉶?쒕떎.  
-> ??쒕낫?쒖쓽 `?ㅻ뒛???숈뒿 怨꾪쉷` ?곸뿭?먯꽌 怨쇰ぉ, 援먯옱, ?몃? ?댁슜, ?덉긽 ?쒓컙, ?곹깭瑜??쒖떆?섍린 ?꾪빐 ?ъ슜?쒕떎.
+**Type**: `API Endpoint`  
+**Location**: `Common/api/plans-today-get.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### ?붽뎄?ы빆
+### Purpose
 
-- [x] ?ㅻ뒛 ?좎쭨 湲곗? 怨꾪쉷 諛곗뿴??諛섑솚?쒕떎.
-- [x] 媛???ぉ? 怨쇰ぉ, 援먯옱, ?몃? ?댁슜, ?덉긽 ?쒓컙, ?곹깭, ?됱긽 ?뺣낫瑜??ы븿?쒕떎.
-- [x] ?몄쬆???꾩슂?섎떎.
+> Today-plan list used by the dashboard.
 
 ---
 
-### ?명꽣?섏씠???뺤쓽
+### Endpoint
 
-```typescript
-type PlanStatus = 'pending' | 'in_progress' | 'done'
-
-interface PlanItem {
-  id: string
-  subject: string
-  book: string
-  detail: string
-  estimatedMin: number
-  status: PlanStatus
-  color: string
-}
-
-interface PlansTodayGetResponse {
-  data: PlanItem[]
-}
-
-interface ApiErrorResponse {
-  code: string
-  message: string
-  details?: unknown
-}
-```
+- GET /api/v1/dashboard/plans/today
 
 ---
 
-### ?쒕쾭 寃利?洹쒖튃
+### Auth
 
-| ?꾨뱶 | 洹쒖튃 |
-|------|------|
-| Authorization | ?꾩닔. ?좏슚??access token ?먮뒗 ?쒕쾭 ?몄쬆 而⑦뀓?ㅽ듃媛 ?덉뼱???쒕떎. |
-| `status` | ?묐떟 媛믪? `pending`, `in_progress`, `done` 以??섎굹?ъ빞 ?쒕떎. |
-| `estimatedMin` | 1 ?댁긽???뺤닔?ъ빞 ?쒕떎. |
-| `color` | ?좏슚?섏? ?딆쑝硫??쒕쾭媛 `slate` 濡??뺢퇋?뷀븳?? |
-
-寃利??ㅽ뙣 ??沅뚯옣 ?먮윭:
-- ?몄쬆 ?놁쓬: `401 AUTH_REQUIRED`
-- ?섎せ???곹깭 媛? `500 INVALID_PLAN_STATUS`
-- ?섎せ???쒓컙 媛? `500 INVALID_PLAN_DURATION`
+- Require a valid authenticated user context.
+- Return `401 AUTH_REQUIRED` when the caller is not signed in.
 
 ---
 
-### ?숈옉 ?뺤쓽
+### Request
 
-| 議곌굔 | ?숈옉 |
-|------|------|
-| 怨꾪쉷 議댁옱 | ?뺣젹??怨꾪쉷 諛곗뿴??諛섑솚?쒕떎. |
-| 怨꾪쉷 ?놁쓬 | 鍮?諛곗뿴??諛섑솚?쒕떎. |
-| ?좎쭨 湲곗? | ?ъ슜??profile timezone ??湲곗??쇰줈 `today` 瑜?怨꾩궛?쒕떎. |
-| timezone ?놁쓬 | 湲곕낯 timezone ? `Asia/Seoul` ???ъ슜?쒕떎. |
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
 
 ---
 
-### Query Key / Adapter
+### Response
 
-- React Query key: `['dashboard', 'plans-today-get', mode]`
-- remote DTO ??`data: PlanItem[]` 援ъ“瑜??ъ슜?쒕떎.
-- ?쒕쾭媛 諛섑솚??諛곗뿴 ?쒖꽌??UI ?쒖떆 ?쒖꽌濡?洹몃?濡??ъ슜?쒕떎.
-- UI 紐⑤뜽 蹂??洹쒖튃:
-  - `title = \`${subject} - ${book}\``
-  - `time = \`${estimatedMin}遺?``
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
 
 ---
 
-### ?뚯뒪???쒕굹由ъ삤
+### Validation Rules
 
-- [x] 怨꾪쉷 紐⑸줉??諛곗뿴濡?諛섑솚?쒕떎.
-- [x] 怨꾪쉷???놁쓣 ??鍮?諛곗뿴??諛섑솚?쒕떎.
-- [ ] ?몄쬆 ?녿뒗 ?붿껌? `401 AUTH_REQUIRED` 瑜?諛섑솚?쒕떎.
-- [ ] timezone ???녿뒗 ?ъ슜?먮뒗 `Asia/Seoul` 湲곗??쇰줈 ?ㅻ뒛 怨꾪쉷??怨꾩궛?쒕떎.
-- [ ] 鍮꾩젙??`color` 媛믪? `slate` 濡??뺢퇋?뷀븳??
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
 
 ---
 
-### 蹂寃??대젰
+### Errors
 
-| ?좎쭨 | 蹂寃??댁슜 | ?묒꽦??|
-|------|-----------|--------|
-| 2026-03-28 | ?ㅻ뒛 怨꾪쉷 議고쉶 API spec Ready 濡??뺤젙 | Codex |
+- Use endpoint-specific validation errors together with `401 AUTH_REQUIRED` when authentication is missing.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

@@ -1,94 +1,59 @@
-﻿## Spec: POST /api/v1/auth/web/refresh
+## Spec: POST /api/v1/auth/web/refresh
 
-**?좏삎**: `API Endpoint`  
-**?꾩튂**: `Common/api/auth-web-refresh-post.md`  
-**?묒꽦??*: 2026-03-28  
-**?곹깭**: `Ready`
-
----
-
-### 紐⑹쟻
-
-> same-site refresh cookie 瑜?湲곕컲?쇰줈  
-> ???몄뀡??蹂듦뎄?섍굅??access token ???щ컻湲됲븳??
+**Type**: `API Endpoint`  
+**Location**: `Common/api/auth-web-refresh-post.md`  
+**Updated**: 2026-03-29  
+**Status**: `Ready`
 
 ---
 
-### ?붽뎄?ы빆
+### Purpose
 
-- [x] request body ?놁씠 ?몄텧?????덈떎.
-- [x] ?깃났 ???ъ슜???뺣낫? ??access token ??諛섑솚?쒕떎.
-- [x] ?좏슚??refresh cookie 媛 ?녾굅??臾댄슚?섎㈃ ??긽 `401` ??諛섑솚?쒕떎.
-- [x] cookie 湲곕컲 ?몄쬆???꾪빐 `credentials: 'include'` 媛 ?꾩슂?섎떎.
+> Web refresh endpoint for rotating the cookie-backed session.
 
 ---
 
-### ?명꽣?섏씠???뺤쓽
+### Endpoint
 
-```typescript
-interface AuthUser {
-  id: string
-  name: string
-  grade?: string
-  subscription?: 'free' | 'premium' | 'family' | 'school'
-}
-
-interface AuthWebSessionResponse {
-  user: AuthUser
-  accessToken: string
-}
-
-interface ApiErrorResponse {
-  code: string
-  message: string
-  details?: unknown
-}
-```
+- POST /api/v1/auth/web/refresh
 
 ---
 
-### ?쒕쾭 寃利?洹쒖튃
+### Auth
 
-| ?꾨뱶 | 洹쒖튃 |
-|------|------|
-| Cookie | ?좏슚??refresh cookie 媛 ?덉뼱???쒕떎. |
-| Origin | ?덉슜??same-site origin ?댁뼱???쒕떎. |
-
-寃利??ㅽ뙣 ??沅뚯옣 ?먮윭:
-- refresh cookie ?놁쓬: `401 REFRESH_SESSION_NOT_FOUND`
-- refresh cookie 留뚮즺 ?먮뒗 臾댄슚: `401 REFRESH_SESSION_INVALID`
+- Use the web same-site refresh cookie as the transport.
+- Clients should send requests with `credentials: include`.
 
 ---
 
-### ?숈옉 ?뺤쓽
+### Request
 
-| 議곌굔 | ?숈옉 |
-|------|------|
-| ?좏슚??refresh cookie 議댁옱 | ???몄뀡 ?뺣낫瑜?諛섑솚?쒕떎. |
-| ?몄뀡 ?놁쓬 | ??긽 `401` ?몄쬆 ?먮윭瑜?諛섑솚?쒕떎. |
-| ??遺?몄뒪?몃옪 | ???꾨줎??`restoreSession()` ?먯꽌 ?ъ슜?쒕떎. |
-| ?섎룞 ?몄뀡 媛깆떊 | ???꾨줎??`refreshSession()` ?먯꽌 ?ъ궗?⑺븳?? |
+- Use the route, query, and JSON body defined for $Endpoint.
+- Keep required identifiers, enums, and field names stable across client and server changes.
 
 ---
 
-### ?대씪?댁뼵??硫붾え
+### Response
 
-- ???대씪?댁뼵?몃뒗 `401 REFRESH_SESSION_NOT_FOUND`, `401 REFRESH_SESSION_INVALID` 瑜?鍮꾨줈洹몄씤 ?곹깭濡??뺢퇋?뷀븷 ???덈떎.
-- ?쒕쾭 wire contract ????긽 `401` ?대떎.
-
----
-
-### ?뚯뒪???쒕굹由ъ삤
-
-- [x] restoreSession ? refresh endpoint 瑜??몄텧?쒕떎.
-- [x] refreshSession ? ?몄뀡 議댁옱 ??refresh endpoint 瑜??몄텧?쒕떎.
-- [ ] refresh cookie 媛 ?놁쑝硫?`401 REFRESH_SESSION_NOT_FOUND` 瑜?諛섑솚?쒕떎.
-- [ ] refresh cookie 媛 臾댄슚?섎㈃ `401 REFRESH_SESSION_INVALID` 瑜?諛섑솚?쒕떎.
+- Return a stable DTO aligned with the client adapter for this screen or mutation.
+- Prefer cache-friendly responses so the client can update state without guessing.
 
 ---
 
-### 蹂寃??대젰
+### Validation Rules
 
-| ?좎쭨 | 蹂寃??댁슜 | ?묒꽦??|
-|------|-----------|--------|
-| 2026-03-28 | web auth refresh endpoint spec 異붽? | Codex |
+- Validate required fields, route parameters, and supported enum values.
+- Keep timezone, ownership, and ordering rules consistent with the surrounding product flow.
+
+---
+
+### Errors
+
+- Use explicit refresh-session errors when the cookie is missing, invalid, expired, or revoked.
+
+---
+
+### Client Notes
+
+- Keep this contract aligned with captured fixtures and adapter expectations.
+- Update this spec when the real backend payload changes, not just the application code.

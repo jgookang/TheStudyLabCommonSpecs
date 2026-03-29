@@ -1,13 +1,11 @@
-﻿# Backend Specs
-
-서버 구현 상세는 이 폴더에 작성합니다.
-
-현재 문서:
-- `auth-session-lifecycle.md`
-
-권장 문서 예시:
-- `auth-session-lifecycle.md`
-- `schedule-write-service.md`
-- `habit-progress-engine.md`
-- `community-moderation-policy.md`
-- `analytics-aggregation-pipeline.md`
+# Backend Design Notes
+Backend design docs describe how the server should satisfy the shared contracts in Common/ while keeping web and mobile transport differences explicit.
+### Primary Topics
+- Auth and session lifecycle
+- Session storage and rotation strategy
+- Middleware and authorization context
+- Operational guardrails for logging, rate limits, and revocation
+### How To Use This Folder
+- Review the shared endpoint contracts first.
+- Lock transport decisions here before implementation starts in the server repository.
+- Use these notes to drive smoke-test readiness and endpoint rollout order.
