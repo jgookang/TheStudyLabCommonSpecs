@@ -63,6 +63,7 @@
 - PostgreSQL blocked-run evidence captured: `Server/backend/postgres-smoke-evidence.md`.
 - Added PostgreSQL relational schema bootstrap script (`npm run db:bootstrap:postgres`).
 - Current bootstrap run is also blocked by same PostgreSQL credential auth error (`28P01`).
+- Added dev-only PostgreSQL lifecycle scripts (`db:dev:start`, `db:dev:stop`, `db:dev:status`, `db:dev:url`).
 
 ---
 

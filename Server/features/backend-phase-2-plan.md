@@ -213,6 +213,8 @@
 - Added restart validation runner in implementation repo: `npm run smoke:postgres`.
 - `pg` install completed; current block is PostgreSQL credential auth failure (`28P01`) on local retry.
 - Added relational schema bootstrap runner (`npm run db:bootstrap:postgres`), currently blocked by same credential issue.
+- Added dev-only PostgreSQL lifecycle scripts for manual start/stop:
+- `db:dev:start`, `db:dev:stop`, `db:dev:status`, `db:dev:url`
 - Captured blocked smoke attempt evidence:
 - `Server/backend/postgres-smoke-evidence.md`
 - Added relational schema bootstrap runner:
