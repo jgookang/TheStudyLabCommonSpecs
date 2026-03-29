@@ -125,6 +125,46 @@
 
 ---
 
+### Slice 3 Progress (2026-03-29)
+
+#### Completed
+
+1. Operator audit pagination/cursor and filter presets
+- Added cursor pagination metadata to operator audit query:
+- `GET /api/v1/operator/audit/events`
+- Added cursor metadata headers to operator audit export:
+- `GET /api/v1/operator/audit/events/export?format=jsonl`
+- Added operator-protected saved filter endpoints:
+- `GET /api/v1/operator/audit/filters`
+- `POST /api/v1/operator/audit/filters`
+- `DELETE /api/v1/operator/audit/filters/:filterId`
+
+2. Revoke-all-by-criteria workflow
+- Added operator-protected criteria revoke endpoint:
+- `POST /api/v1/auth/operator/sessions/revoke-all-by-criteria`
+- Added scope guards and payload validation for criteria fields:
+- `clientType`, `createdFrom`, `createdTo`, `activeOnly`, `maxRevocations`
+
+3. Persistence-backed verification expansion
+- Added persistence restart coverage for mutation domains beyond auth core:
+- dashboard plan mutation persistence
+- schedule mutation persistence
+- habit mutation persistence
+- community mutation persistence
+
+4. Verification
+- Full server test suite passed (`node --test`, 34 tests).
+- Remote smoke was not re-run inside this sandbox session due process spawn policy restriction.
+- Last known remote smoke pass remains `2026-03-29 12:14 KST`.
+
+#### Next Slice
+
+1. Re-run remote smoke outside sandbox restrictions and append fresh results in `Clinet/api/remote-smoke-test-results.md`.
+2. Introduce audit retention policy controls (event window and export boundaries).
+3. Define operator workflow hardening for bulk actions (dry-run/approval/log annotations).
+
+---
+
 ### Out of Scope for First Slice
 
 - Full analytics/event warehouse ingestion.

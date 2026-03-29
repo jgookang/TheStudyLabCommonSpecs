@@ -42,20 +42,22 @@
 - `npm.cmd run smoke:remote -- --base-url http://127.0.0.1:8080` (`2026-03-29 10:23 KST`)
 - Phase 2 slice-2 regression check passed:
 - `npm.cmd run smoke:remote -- --base-url http://127.0.0.1:8080` (`2026-03-29 12:14 KST`)
+- Phase 2 slice-3 verification passed:
+- `node --test` (`34/34`)
+- Remote smoke was not re-run in this sandbox session due process spawn policy restriction.
+- Last known smoke pass remains `2026-03-29 12:14 KST`.
 
 ---
 
 ### Current Open Item
 
-- Phase 2 slice-3 execution:
-- operator tooling pagination/cursor and filter presets
-- revoke-all-by-criteria workflows
-- persistence-backed coverage expansion beyond auth core
+- Remote smoke re-run outside sandbox-restricted shell and result capture.
+- Phase 3 planning kickoff (retention policy and bulk-action workflow hardening).
 
 ---
 
 ### First Tasks for Next Session
 
-1. Add cursor/pagination support for operator audit query/export endpoints.
-2. Implement revoke-all criteria model (clientType + scope guards).
-3. Expand persistence-backed test scope to additional mutation domains.
+1. Re-run remote smoke and sync latest timestamp in `Clinet/api/remote-smoke-test-results.md`.
+2. Add audit retention policy design note and migration strategy.
+3. Define operator bulk-action hardening requirements for next phase.
